@@ -1,6 +1,6 @@
 [app link;-](https://steady-jalebi-75285b.netlify.app/)
 [ppt link;-]()
-
+ 
 # Blockchain-powered platform for local vendors and startups.
 
 Solves challenges like transparent payments, record-keeping, and business growth.
