@@ -1,5 +1,5 @@
 [app link;-](https://steady-jalebi-75285b.netlify.app/)
-[ppt link;-]()
+[ppt link;-](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fsoumykiller%2Fbro-chain%2F389ebb5fc352bae2ca785b7c58d018ead4915eff%2FBro-Chain...%2520The%2520Integrated%2520Super-App%2520for%2520Local%2520Vendors.pdf%2520(1).pptx&wdOrigin=BROWSELINK)
  
 # Blockchain-powered platform for local vendors and startups.
 
