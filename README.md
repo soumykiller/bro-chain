@@ -1,23 +1,33 @@
-# Fintech Platform
+[app link;-](https://steady-jalebi-75285b.netlify.app/)
+[ppt link;-]()
 
-A simple web-based fintech platform designed for **Micro, Small, and Medium Enterprises (MSMEs)** to manage financial activities, business performance, and digital payments.  
-This project is built using **HTML, CSS, and JavaScript**.
+# Blockchain-powered platform for local vendors and startups.
+
+Solves challenges like transparent payments, record-keeping, and business growth.
+Acts as a one-stop solution for describing business problems, tracking transactions, and accessing tailored support.
+Ensures trust and transparency through tamper-proof blockchain integration.
+Helps vendors and startups scale sustainably.
 
 ---
 
 ## 🚀 Features
-- **User-friendly Interface** – Clean, responsive design for MSMEs.  
-- **Business Dashboard** – View performance and key metrics.  
-- **Expense Tracking** – Record and monitor business expenses.  
-- **Digital Payments** – Placeholder for payment integration (e.g., Razorpay).  
-- **Interactive UI** – Built with JavaScript for dynamic elements.  
+- Transparent digital transactions for secure payments.
+Fund-splitting functions for collaborative projects.
+Immutable ledger for recording sales, expenses, and customer data.
+Encrypted communication between vendors, service providers, and advisors.
+Vendor dashboards for monitoring growth, managing cash flow, and setting business goals.
+Systematic solutions for startups, including financial planning and digital marketing strategies.
 
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend**: HTML, CSS, JavaScript  
-- **Design**: Responsive UI for desktop & mobile  
-- **Payment Gateway (Optional)**: Razorpay / UPI / Other APIs  
+Frontend: React Native – smooth and user-friendly mobile experience.
+Backend: Node.js – fast and reliable server operations.
+Database: MongoDB – secure storage of vendor and user data.
+Blockchain: Solidity smart contracts deployed via Hardhat.
+Wallet Integration: MetaMask for secure transactions and blockchain connectivity.
+Combines Web2 usability with Web3 security and transparency.
+
 
 ---
 
