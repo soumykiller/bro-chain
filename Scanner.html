@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Scanner</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --yellow: #facc15;
+      --yellow-dark: #eab308;
+      --black: #18181b;
+      --black-light: #27272a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Inter", sans-serif; }
+    body {
+      background: var(--black);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .phone {
+      width: 360px;
+      height: 680px;
+      background: var(--black-light);
+      border: 4px solid var(--yellow);
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      padding: 10px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 10px;
+      font-size: 1.2rem;
+      color: var(--yellow);
+      font-weight: 700;
+      border-bottom: 2px solid var(--yellow-dark);
+    }
+
+    .scanner-area {
+      height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    #qr-reader {
+      width: 250px;
+      height: 250px;
+      border: 2px solid var(--yellow);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .camera-btn {
+      margin-top: 15px;
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .camera-btn:hover {
+      transform: scale(1.1);
+    }
+
+    #result-box {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--yellow);
+      font-weight: 600;
+      display: none;
+    }
+
+    #ok-button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: var(--yellow);
+      color: var(--black);
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #ok-button:hover {
+      background: var(--yellow-dark);
+    }
+  </style>
+
+  <!-- QR Scanner Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <div class="phone">
+    <div class="header">QR Scanner</div>
+
+    <div class="scanner-area">
+      <div id="qr-reader"></div>
+      <button class="camera-btn" id="start-camera">
+        <i class="fas fa-camera"></i>
+      </button>
+    </div>
+
+    <div id="result-box">Scanned Result</div>
+    <div style="text-align:center;">
+      <button id="ok-button">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const resultBox = document.getElementById("result-box");
+    const okButton = document.getElementById("ok-button");
+    const cameraButton = document.getElementById("start-camera");
+    let scannerStarted = false;
+    let html5QrCode;
+
+    cameraButton.addEventListener("click", () => {
+      if (!scannerStarted) {
+        html5QrCode = new Html5Qrcode("qr-reader");
+        const config = {
+          fps: 10,
+          qrbox: 200
+        };
+        html5QrCode.start(
+          { facingMode: "environment" },
+          config,
+          qrCodeMessage => {
+            resultBox.textContent = `Scanned: ${qrCodeMessage}`;
+            resultBox.style.display = "block";
+            okButton.style.display = "inline-block";
+            html5QrCode.stop(); // stop scanner
+            scannerStarted = false;
+          },
+          error => {
+            // silent scan error
+          }
+        ).then(() => {
+          scannerStarted = true;
+        }).catch(err => {
+          alert("Camera error: " + err);
+        });
+      }
+    });
+
+    okButton.addEventListener("click", () => {
+      resultBox.style.display = "none";
+      okButton.style.display = "none";
+      document.getElementById("qr-reader").innerHTML = "";
+    });
+  </script>
+</body>
+</html>
+

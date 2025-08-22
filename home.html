@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=370, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>BroChain</title>
+  <style>
+    /* ---------- GENERAL LAYOUT ---------- */
+    body{
+      background:linear-gradient(135deg,#18181b 0%,#27272a 60%,#111112 100%);
+      min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center;
+    }
+    .phone-frame{
+      width:370px;max-width:98vw;min-height:700px;position:relative;
+      background:#18181b;border:4px solid #27272a;border-radius:32px;overflow:hidden;
+      box-shadow:0 8px 32px rgba(0,0,0,0.28);
+      display:flex;flex-direction:column;align-items:center;padding-bottom:64px;box-sizing:border-box;
+    }
+
+    /* ---------- TOP BAR ---------- */
+    .top-bar{width:100%;height:70px;display:flex;align-items:center;justify-content:center;position:relative;}
+    .menu-btn{position:absolute;left:18px;top:50%;transform:translateY(-50%);background:none;border:none;width:48px;height:48px;cursor:pointer;z-index:102;}
+    .center-logo{width:164px;height:164px;margin:32px auto 0;object-fit:contain;filter:drop-shadow(0 4px 16px #fde04755);display:block;}
+
+    /* ---------- WELCOME & SEARCH ---------- */
+    .welcome-text{width:100%;display:flex;justify-content:center;margin:8px 0 12px;}
+    .welcome-text span{color:#fde047;font-size:1.15rem;font-weight:600;text-shadow:0 2px 8px #000a;}
+    .search-row{width:90%;margin:0 auto 18px;display:flex;align-items:center;gap:10px;}
+    .search-bar{flex:1;padding:.55rem 1.2rem;border:none;border-radius:1.5rem;font-size:1rem;background:#23232a;color:#fff;box-shadow:0 2px 8px #0004;outline:none;}
+    .search-bar::placeholder{color:#b0b0b0}
+
+    /* ---------- BUTTON / ICON SHARED ---------- */
+    a.icon-btn,a.bar-btn,a.center-btn{display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:inherit;}
+    .icon-btn{background:#23232a;border-radius:50%;width:38px;height:38px;font-size:1.3rem;color:#fde047;box-shadow:0 2px 8px #0004;transition:background .2s;}
+    .icon-btn:hover{background:#fde047;color:#23232a;}
+
+    /* ---------- SIDEBAR ---------- */
+    .sidebar-backdrop{display:none;position:absolute;z-index:200;top:0;left:0;width:100%;height:100%;background:rgba(24,24,27,.55);}
+    .sidebar-backdrop.active{display:block;}
+    .sidebar{position:absolute;top:0;left:0;height:100%;width:210px;background:#23232a;box-shadow:2px 0 16px #0007;z-index:201;
+             border-top-left-radius:28px;border-bottom-left-radius:28px;border-right:2px solid #fde047;
+             transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,2,.6,1);display:flex;flex-direction:column;padding-top:32px;}
+    .sidebar.active{transform:translateX(0);}
+    .sidebar-title{color:#fde047;font-size:1.2rem;font-weight:700;margin-left:28px;margin-bottom:24px;}
+    .sidebar-close{position:absolute;top:18px;right:18px;background:none;border:none;font-size:1.6rem;color:#fde047;cursor:pointer;}
+    .sidebar ul{list-style:none;margin:0;padding:0;width:100%;}
+    .sidebar ul li a{display:flex;align-items:center;gap:12px;padding:16px 32px 16px 18px;border-radius:0 24px 24px 0;font-size:1.08rem;
+                     color:#fff;text-decoration:none;transition:background .18s,color .18s;}
+    .sidebar ul li a:hover{background:#fde04722;color:#fde047;}
+
+    /* ---------- FEATURE GRID BOXES ---------- */
+    a.grid-box{display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;color:inherit;
+               background:#23232a;border:2px solid #fde047;border-radius:14px;padding:14px 6px;box-shadow:0 2px 8px #0007;}
+    a.stack-box{background:#23232a;border:2px solid #fde047;border-radius:16px;padding:10px 16px;width:130px;text-align:center;
+                font-weight:600;color:#fde047;text-decoration:none;box-shadow:0 2px 8px #0007;}
+
+    /* ---------- BOTTOM BAR ---------- */
+    .bottom-bar{position:absolute;left:0;right:0;bottom:0;height:64px;background:#23232a;border-top:2px solid #fde047;
+                display:flex;align-items:center;justify-content:space-around;box-shadow:0 -2px 12px #0007;border-bottom-left-radius:28px;border-bottom-right-radius:28px;}
+    .bar-btn{flex:1;padding:0;margin:0 2px;background:none;border:none;}
+    .center-btn{width:56px;height:56px;margin-top:-18px;border-radius:50%;background:#fde047;box-shadow:0 2px 12px #fde04755;flex:none;}
+    .bar-btn svg,.center-btn svg{width:28px;height:28px;}
+    .center-btn svg{width:36px;height:36px;}
+
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+
+    <!-- ===== SIDEBAR & BACKDROP ===== -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <nav class="sidebar" id="sidebarMenu" aria-label="Sidebar Menu">
+      <button class="sidebar-close" id="sidebarCloseBtn" aria-label="Close sidebar">&times;</button>
+      <div class="sidebar-title">Menu</div>
+      <ul>
+        <li><a href="profile.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#fde047" stroke-width="2"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7" stroke="#fde047" stroke-width="2"/></svg>Profile</a></li>
+        <li><a href="expenses.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="3" stroke="#fde047" stroke-width="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2" stroke="#fde047" stroke-width="2"/></svg>Expenses</a></li>
+        <li><a href="BR).html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fde047" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#fde047" stroke-width="2"/></svg>Brocoin</a></li>
+        <li><a href="transcation.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fde047" stroke-width="2"/><path d="M12 7v5l3 3" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>History</a></li>
+        <li><a href="biometric.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 11v2m0 4v.01M8.5 17a6.5 6.5 0 1 1 7 0" stroke="#fde047" stroke-width="2" stroke-linecap="round"/><path d="M12 7a4 4 0 0 1 4 4v1" stroke="#fde047" stroke-width="2" stroke-linecap="round"/><path d="M12 3a8 8 0 0 1 8 8v2" stroke="#fde047" stroke-width="2" stroke-linecap="round"/></svg>Biometric</a></li>
+        <li><a href="download.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17h16" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a></li>
+        <li><a href="sign.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 17l5-5-5-5" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12H9" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 4v16" stroke="#fde047" stroke-width="2" stroke-linecap="round"/></svg>Logout</a></li>
+        <li><a href="settings.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#fde047" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 8.6 15a1.65 1.65 0 0 0-1.82-.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0 .33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 15 8.6a1.65 1.65 0 0 0 1.82.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 15z" stroke="#fde047" stroke-width="2"/></svg>Settings</a></li>
+      </ul>
+    </nav>
+
+    <!-- ===== TOP SECTION ===== -->
+    <div class="top-bar">
+      <button class="menu-btn" id="sidebarOpenBtn" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
+          <rect y="5" width="26" height="3" rx="1.5" fill="#fde047"/>
+          <rect y="11.5" width="26" height="3" rx="1.5" fill="#fde047"/>
+          <rect y="18" width="26" height="3" rx="1.5" fill="#fde047"/>
+        </svg>
+      </button>
+      <img src="Bro-Chain-6-28-2025__1_-removebg-preview.png" alt="BroChain Logo" class="center-logo" />
+    </div>
+
+    <div class="welcome-text"><span>Great Energy meets Great Minds!</span></div>
+
+    <div class="search-row">
+      <input class="search-bar" type="text" placeholder="Search BroChain..." />
+      <a class="icon-btn" href="D chatbox.html" aria-label="Chats">
+        <!-- chat icon -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 17V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7l-4 4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="icon-btn" href="addcontacts.html" aria-label="Add">
+        <!-- plus icon -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="11" y1="5" x2="11" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <!-- ===== VIDEO SLIDER (each slide wrapped in anchor) ===== -->
+    <div style="position:relative;width:320px;height:180px;margin:16px auto;overflow:hidden;border-radius:16px;border:3px solid #fde047;box-shadow:0 2px 12px #0007;background:#111112;">
+      <div id="videoSlider" style="display:flex;width:960px;transition:transform 0.5s ease;">
+        <!-- Slide 1 -->
+        <a href="doforyou.html" style="width:320px;height:180px;overflow:hidden;border-radius:16px;position:relative;flex-shrink:0;text-decoration:none;">
+          <video src="8141399-uhd_3840_2160_25fps.mp4" autoplay muted loop style="width:100%;height:100%;object-fit:cover;"></video>
+          <div style="position:absolute;top:10px;left:10px;color:#facc15;font-weight:bold;font-size:16px;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;">Do&nbsp;For&nbsp;You</div>
+        </a>
+        <!-- Slide 2 -->
+        <a href="Your Buddy.html" style="width:320px;height:180px;overflow:hidden;border-radius:16px;position:relative;flex-shrink:0;text-decoration:none;">
+          <video src="8467248-uhd_3840_2160_25fps.mp4" autoplay muted loop style="width:100%;height:100%;object-fit:cover;"></video>
+          <div style="position:absolute;top:10px;left:10px;color:#facc15;font-weight:bold;font-size:16px;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;">Your&nbsp;Buddy</div>
+        </a>
+        <!-- Slide 3 -->
+        <a href="Bro-social.html" style="width:320px;height:180px;overflow:hidden;border-radius:16px;position:relative;flex-shrink:0;text-decoration:none;">
+          <video src="3189045-hd_1920_1080_25fps.mp4" autoplay muted loop style="width:100%;height:100%;object-fit:cover;"></video>
+          <div style="position:absolute;top:10px;left:10px;color:#facc15;font-weight:bold;font-size:16px;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;">Bro&nbsp;Social</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== 2×2 GRID + STACKED BOXES ===== -->
+    <div style="width:100%;display:flex;justify-content:space-between;padding:0 16px;margin-top:10px;">
+      <!-- Left 2×2 -->
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:170px;margin-left:10px;">
+        <a class="grid-box" href="expenses.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="3" stroke="#fde047" stroke-width="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2" stroke="#fde047" stroke-width="2"/></svg><span style="color:#fde047;font-size:.8rem;margin-top:6px;font-weight:600;">Performance</span></a>
+        <a class="grid-box" href="analytics.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="color:#fde047;font-size:.8rem;margin-top:6px;font-weight:600;">Analytics</span></a>
+        <a class="grid-box" href="strategy.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#fde047" stroke-width="2"/><path d="M8 14l4-4 4 4" stroke="#fde047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="color:#fde047;font-size:.8rem;margin-top:6px;font-weight:600;">Strategy</span></a>
+        <a class="grid-box" href="BR).html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fde047" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#fde047" stroke-width="2"/></svg><span style="color:#fde047;font-size:.8rem;margin-top:6px;font-weight:600;">Capital</span></a>
+      </div>
+      <!-- Right stacked -->
+      <div style="display:flex;flex-direction:column;gap:12px;margin-right:10px;">
+        <a class="stack-box" href="expenses.html">Market</a>
+        <a class="stack-box" href="Your Buddy.html">Your&nbsp;Buddy</a>
+        <a class="stack-box" href="doforyou.html">Do&nbsp;For&nbsp;You</a>
+      </div>
+    </div>
+
+    <!-- ===== ROTATING PHRASE RECTANGLE (optional taps not requested) ===== -->
+  <div style="position:relative;width:320px;height:50px;margin:16px auto;overflow:hidden;border-radius:16px;border:3px solid #fde047;box-shadow:0 2px 12px #0007;background:#111112;">
+  <div id="phraseSlider" style="display:flex;transition:transform 0.5s ease;">
+    
+    <a href="decribe b.html" style="width:320px;height:50px;display:flex;align-items:center;justify-content:center;background:#1e1e20;flex-shrink:0;text-decoration:none;">
+      <div style="color:#facc15;font-weight:bold;font-size:14px;text-align:center;">Describe your business</div>
+    </a>
+
+    <a href="pron.html" style="width:320px;height:50px;display:flex;align-items:center;justify-content:center;background:#1e1e20;flex-shrink:0;text-decoration:none;">
+      <div style="color:#facc15;font-weight:bold;font-size:14px;text-align:center;">Describe your problem</div>
+    </a>
+
+  </div>
+</div>
+
+
+    <!-- ===== BOTTOM NAVIGATION BAR ===== -->
+    <nav class="bottom-bar">
+      <a class="bar-btn" href="wallet.html" aria-label="Wallet"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="7" width="22" height="14" rx="4" stroke="#fde047" stroke-width="2"/><rect x="17" y="13" width="4" height="2" rx="1" fill="#fde047"/></svg></a>
+      <a class="bar-btn" href="leaderboard.html" aria-label="Leaderboard"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2" stroke="#fde047" stroke-width="2"/><rect x="5" y="7" width="18" height="8" rx="4" stroke="#fde047" stroke-width="2"/><path d="M14 15v5" stroke="#fde047" stroke-width="2"/><rect x="11" y="20" width="6" height="2" rx="1" fill="#fde047"/></svg></a>
+      <a class="center-btn" href="Scanner.html" aria-label="Handshake"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M10 20l8 8 8-8" stroke="#23232a" stroke-width="2"/><path d="M10 16l8 8 8-8" stroke="#23232a" stroke-width="2"/><rect x="6" y="10" width="24" height="8" rx="4" stroke="#23232a" stroke-width="2"/></svg></a>
+      <a class="bar-btn" href="expenses.html" aria-label="Money"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="12" rx="4" stroke="#fde047" stroke-width="2"/><circle cx="14" cy="14" r="3" stroke="#fde047" stroke-width="2"/></svg></a>
+      <a class="bar-btn" href="profile.html" aria-label="Profile"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="11" r="5" stroke="#fde047" stroke-width="2"/><path d="M5 23c0-4 4-7 9-7s9 3 9 7" stroke="#fde047" stroke-width="2"/></svg></a>
+    </nav>
+
+  </div><!-- /.phone-frame -->
+
+  <!-- ===== JS (unchanged) ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ---------- SIDEBAR ---------- */
+      const sidebarOpenBtn  = document.getElementById('sidebarOpenBtn');
+      const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+      const sidebarMenu     = document.getElementById('sidebarMenu');
+      const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+      const openSidebar  = () => { sidebarMenu.classList.add('active'); sidebarBackdrop.classList.add('active'); };
+      const closeSidebar = () => { sidebarMenu.classList.remove('active'); sidebarBackdrop.classList.remove('active'); };
+      sidebarOpenBtn.addEventListener('click', openSidebar);
+      sidebarCloseBtn.addEventListener('click', closeSidebar);
+      sidebarBackdrop.addEventListener('click', closeSidebar);
+
+      /* ---------- VIDEO SLIDER ---------- */
+      const videoSlider = document.getElementById('videoSlider');
+      let videoIndex = 0;
+      const totalVideoSlides = videoSlider.children.length;
+      const moveVideoSlide = () => videoSlider.style.transform = `translateX(-${videoIndex * 320}px)`;
+      setInterval(() => { videoIndex = (videoIndex + 1) % totalVideoSlides; moveVideoSlide(); }, 5000);
+      let startXVideo = null;
+      videoSlider.addEventListener('touchstart', e => startXVideo = e.touches[0].clientX);
+      videoSlider.addEventListener('touchend', e => {
+        if(startXVideo===null) return;
+        const diff = e.changedTouches[0].clientX - startXVideo;
+        if(diff>40 && videoIndex>0) videoIndex--;
+        else if(diff<-40 && videoIndex<totalVideoSlides-1) videoIndex++;
+        moveVideoSlide(); startXVideo=null;
+      });
+
+      /* ---------- PHRASE SLIDER ---------- */
+      const phraseSlider = document.getElementById('phraseSlider');
+      let phraseIndex = 0;
+      const totalPhraseSlides = phraseSlider.children.length;
+      const movePhraseSlide = () => phraseSlider.style.transform = `translateX(-${phraseIndex * 320}px)`;
+      setInterval(() => { phraseIndex = (phraseIndex + 1) % totalPhraseSlides; movePhraseSlide(); }, 5000);
+      let startXPhrase = null;
+      phraseSlider.addEventListener('touchstart', e => startXPhrase = e.touches[0].clientX);
+      phraseSlider.addEventListener('touchend', e => {
+        if(startXPhrase===null) return;
+        const diff = e.changedTouches[0].clientX - startXPhrase;
+        if(diff>40 && phraseIndex>0) phraseIndex--;
+        else if(diff<-40 && phraseIndex<totalPhraseSlides-1) phraseIndex++;
+        movePhraseSlide(); startXPhrase=null;
+      });
+    });
+  </script>
+</body>
+</html>
+

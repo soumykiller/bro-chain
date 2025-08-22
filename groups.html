@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Goals</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: #FFD700;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      height: 100vh;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 680px;
+      background: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #FFD70088;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .top-bar {
+      height: 60px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom: 1px solid #FFD70044;
+      flex-shrink: 0;
+    }
+
+    .top-bar .back {
+      position: absolute;
+      left: 15px;
+      font-size: 22px;
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    .top-bar .title i {
+      margin-right: 8px;
+    }
+
+    .goals-wrapper {
+      flex: 1;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding: 15px;
+    }
+
+    .goals-wrapper::-webkit-scrollbar { display: none; }
+
+    .goal-box {
+      background: #000;
+      border: 2px solid #FFD70055;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .goal-box video {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 1px solid #FFD70033;
+    }
+
+    .goal-label {
+      padding: 10px;
+      font-size: 15px;
+      text-align: center;
+      background: #111;
+    }
+
+    .menu-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 18px;
+      color: #FFD700;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 35px;
+      right: 10px;
+      background: #222;
+      border: 1px solid #FFD70044;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+      z-index: 3;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 8px 12px;
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    .dropdown a:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone-container">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="Bro-social.html" class="back"><i class="fas fa-arrow-left"></i></a>
+    <div class="title"><i class="fas fa-bullseye"></i> Goals</div>
+  </div>
+
+  <!-- Goals Grid -->
+  <div class="goals-wrapper">
+
+    <!-- Goal Box 1 -->
+    <div class="goal-box">
+      <i class="fas fa-ellipsis-v menu-icon" onclick="toggleMenu(this)"></i>
+      <div class="dropdown">
+        <a href="#">Change Goal</a>
+      </div>
+      <video autoplay muted loop playsinline>
+        <source src="10493910-uhd_4096_2160_25fps.mp4" type="video/mp4" />
+      </video>
+      <div class="goal-label">#1&nbsp; Goa Trip – 21‑22 Aug</div>
+    </div>
+
+    <!-- Goal Box 2 -->
+    <div class="goal-box">
+      <i class="fas fa-ellipsis-v menu-icon" onclick="toggleMenu(this)"></i>
+      <div class="dropdown">
+        <a href="#">Change Goal</a>
+      </div>
+      <video autoplay muted loop playsinline>
+        <source src="4440993-hd_1920_1080_25fps.mp4" type="video/mp4" />
+      </video>
+      <div class="goal-label">#2&nbsp; Solo Trek – 05‑06 Sep</div>
+    </div>
+
+    <!-- Goal Box 3 -->
+    <div class="goal-box">
+      <i class="fas fa-ellipsis-v menu-icon" onclick="toggleMenu(this)"></i>
+      <div class="dropdown">
+        <a href="#">Change Goal</a>
+      </div>
+      <video autoplay muted loop playsinline>
+        <source src="5377684-uhd_3840_2160_25fps (1).mp4" type="video/mp4" />
+      </video>
+      <div class="goal-label">#3&nbsp; City Hackathon – 18‑19 Sep</div>
+    </div>
+
+    <!-- Goal Box 4 -->
+    <div class="goal-box">
+      <i class="fas fa-ellipsis-v menu-icon" onclick="toggleMenu(this)"></i>
+      <div class="dropdown">
+        <a href="#">Change Goal</a>
+      </div>
+      <video autoplay muted loop playsinline>
+        <source src="3943396-hd_1920_1080_30fps.mp4" type="video/mp4" />
+      </video>
+      <div class="goal-label">#4&nbsp; Half‑Marathon – 12 Oct</div>
+    </div>
+
+    <!-- Goal Box 5 -->
+    <div class="goal-box">
+      <i class="fas fa-ellipsis-v menu-icon" onclick="toggleMenu(this)"></i>
+      <div class="dropdown">
+        <a href="#">Change Goal</a>
+      </div>
+      <video autoplay muted loop playsinline>
+        <source src="6922960-uhd_3840_2160_25fps.mp4" type="video/mp4" />
+      </video>
+      <div class="goal-label">#5&nbsp; Ski Camp – 02‑07 Dec</div>
+    </div>
+
+  </div><!-- /goals-wrapper -->
+
+</div><!-- /phone-container -->
+
+<script>
+  function toggleMenu(icon) {
+    // Close all other open dropdowns
+    document.querySelectorAll('.dropdown').forEach(menu => {
+      if (menu !== icon.nextElementSibling) {
+        menu.style.display = 'none';
+      }
+    });
+
+    // Toggle the clicked one
+    const dropdown = icon.nextElementSibling;
+    dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+  }
+
+  // Close menu if clicked outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('menu-icon')) {
+      document.querySelectorAll('.dropdown').forEach(menu => {
+        menu.style.display = 'none';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
+

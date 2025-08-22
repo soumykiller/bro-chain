@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bitmoji Integration</title>
+</head>
+<body>
+  <h2>Login with Snapchat</h2>
+  <a id="snapchat-login" href="#">Login</a>
+
+  <div id="bitmoji-container" style="margin-top: 20px;">
+    <h3>Your Bitmoji:</h3>
+    <img id="bitmoji-img" src="" alt="Bitmoji will appear here" style="max-width: 200px;" />
+  </div>
+
+  <script>
+    // Replace with your values from Snap Kit dashboard
+    const CLIENT_ID = 'YOUR_CLIENT_ID';
+    const REDIRECT_URI = 'http://localhost:3000/auth';
+    const SCOPE = 'user.display_name bitmoji.avatar';
+
+    // Redirect to Snapchat OAuth
+    document.getElementById("snapchat-login").href =
+      `https://accounts.snapchat.com/accounts/oauth2/auth?` +
+      `client_id=${CLIENT_ID}&` +
+      `redirect_uri=${REDIRECT_URI}&` +
+      `response_type=token&` +
+      `scope=${SCOPE}&` +
+      `state=random_state`;
+
+    // After redirect from Snapchat
+    window.onload = () => {
+      const hash = window.location.hash.substr(1);
+      const result = hash.split('&').reduce(function (res, item) {
+        const parts = item.split('=');
+        res[parts[0]] = parts[1];
+        return res;
+      }, {});
+
+      if (result.access_token) {
+        fetch('https://kit.snapchat.com/v1/me', {
+          headers: {
+            Authorization: `Bearer ${result.access_token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const bitmojiUrl = data.data.me.bitmoji.avatar;
+            document.getElementById('bitmoji-img').src = bitmojiUrl;
+          })
+          .catch((err) => {
+            console.error('Failed to fetch Bitmoji:', err);
+          });
+      }
+    };
+  </script>
+</body>
+</html>

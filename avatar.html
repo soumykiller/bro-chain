@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Avatar - Bro-Chain</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(270deg, #18181b, #fde047, #18181b);
+      background-size: 600% 600%;
+      animation: bgAnimation 15s ease infinite;
+    }
+
+    @keyframes bgAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .avatar-box {
+      width: 360px;
+      height: 720px;
+      background: rgba(0, 0, 0, 0.3); /* Semi-transparent */
+      border-radius: 2.5rem;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 4px #fde04788;
+      border: 3px solid #fde047;
+      position: relative;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 1s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .skip-btn {
+      position: absolute;
+      top: 10px;
+      left: 16px;
+      background-color: #3b82f6;
+      color: white;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      z-index: 3;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .top-right-logo {
+      position: absolute;
+      top: 10px;
+      right: 18px;
+      width: 48px;
+      height: auto;
+      z-index: 3;
+    }
+
+    .avatar-screen {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 2;
+    }
+
+    .avatar-screen h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fde047;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px #0008;
+    }
+
+    .avatar-preview-box {
+      width: 220px;
+      height: 220px;
+      background: #18181b;
+      border-radius: 1.2rem;
+      border: 2px solid #fde047;
+      box-shadow: 0 2px 12px #0007;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #camera, #snapshot {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 1.2rem;
+      background: #222;
+      border: none;
+      margin: 0;
+      display: block;
+    }
+
+    .avatar-screen button, .ok-btn {
+      background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .avatar-screen button:active, .ok-btn:active {
+      transform: scale(0.95);
+    }
+
+    .ok-btn {
+      display: none;
+      margin-top: 0.3rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="avatar-box">
+    <!-- Skip and Logo -->
+    <a href="gp.html" class="skip-btn">Skip</a>
+    <img src="Logo-removebg-preview.png" alt="Logo" class="top-right-logo" />
+
+    <!-- Avatar Screen -->
+    <div class="avatar-screen">
+      <h2>Create Your Avatar</h2>
+      <div class="avatar-preview-box">
+        <video id="camera" width="220" height="220" autoplay playsinline></video>
+        <canvas id="snapshot" width="220" height="220"></canvas>
+      </div>
+      <a id="okBtn" href="design.html" class="ok-btn">OK</a>
+      <button id="cameraBtn">
+        <span id="cameraBtnIcon">📷</span>
+        <span id="cameraBtnText">Open Camera</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let stream = null;
+    let cameraState = "closed";
+
+    const cameraBtn = document.getElementById('cameraBtn');
+    const cameraBtnIcon = document.getElementById('cameraBtnIcon');
+    const cameraBtnText = document.getElementById('cameraBtnText');
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('snapshot');
+    const okBtn = document.getElementById('okBtn');
+
+    canvas.style.display = "none";
+    okBtn.style.display = "none";
+
+    cameraBtn.addEventListener('click', function () {
+      if (cameraState === "closed") {
+        openCamera();
+      } else if (cameraState === "open") {
+        captureImage();
+      } else if (cameraState === "captured") {
+        resetCamera();
+      }
+    });
+
+    function openCamera() {
+      canvas.style.display = "none";
+      video.style.display = "block";
+      cameraBtnIcon.textContent = "📸";
+      cameraBtnText.textContent = "Capture";
+      okBtn.style.display = "none";
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function(s) {
+            stream = s;
+            video.srcObject = stream;
+            video.play();
+            cameraState = "open";
+          })
+          .catch(function(err) {
+            alert('Could not access camera: ' + err);
+          });
+      } else {
+        alert('Camera not supported in this browser.');
+      }
+    }
+
+    function captureImage() {
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      localStorage.setItem('capturedAvatar', canvas.toDataURL());
+      canvas.style.display = "block";
+      video.style.display = "none";
+      cameraBtnIcon.textContent = "🔄";
+      cameraBtnText.textContent = "Retake";
+      okBtn.style.display = "flex";
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+      cameraState = "captured";
+    }
+
+    function resetCamera() {
+      openCamera();
+    }
+  </script>
+</body>
+</html>

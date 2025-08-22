@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>OTP - Bro-Chain</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 700px;
+      border-radius: 40px;
+      overflow: hidden;
+      background-color: black;
+      position: relative;
+    }
+
+    #bgVideo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .top-right-logo {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      width: 40px;
+      z-index: 2;
+    }
+
+    .otp-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 2px solid #FFD600;
+      padding: 2rem 1rem;
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 85%;
+      max-width: 320px;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .otp-box p {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .otp-input {
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      border: none;
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      width: 120px;
+      letter-spacing: 8px;
+    }
+
+    .btn-verify {
+      background-color: #FFD600;
+      color: black;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-verify:hover {
+      background-color: #e6c200;
+    }
+
+    .btn-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    #otpResult {
+      font-size: 1rem;
+      margin-top: 1rem;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-container">
+    <video id="bgVideo" src="sign.html.mp4" autoplay muted loop playsinline></video>
+    <img src="Logo-removebg-preview.png" alt="Logo" class="top-right-logo" />
+
+    <div class="otp-box">
+      <p>Enter OTP</p>
+      <input class="otp-input" id="userOtp" maxlength="4" placeholder="1234" oninput="checkOtpInput()" />
+      <a class="btn-verify btn-disabled" id="verifyBtn" href="#">Verify</a>
+      <div id="otpResult"></div>
+    </div>
+  </div>
+
+  <script>
+    function checkOtpInput() {
+      const input = document.getElementById('userOtp').value.trim();
+      const btn = document.getElementById('verifyBtn');
+      if (/^\d{4}$/.test(input)) {
+        btn.classList.remove('btn-disabled');
+      } else {
+        btn.classList.add('btn-disabled');
+      }
+    }
+
+    function verifyOtp() {
+      const userOtp = document.getElementById('userOtp').value.trim();
+      const storedOtp = sessionStorage.getItem('brochain_otp');
+      const result = document.getElementById('otpResult');
+
+      if (!/^\d{4}$/.test(userOtp)) {
+        result.textContent = "Please enter a valid 4-digit OTP.";
+        result.style.color = "#ff4444";
+        return;
+      }
+
+      if (userOtp === storedOtp) {
+        result.textContent = "OTP Verified! 🎉";
+        result.style.color = "#FFD600";
+        alert("Account Created Successfully! 🎉");
+        window.location.href = "avatar.html";
+      } else {
+        result.textContent = "Incorrect OTP. Try again.";
+        result.style.color = "#ff4444";
+      }
+    }
+
+    document.getElementById('verifyBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!this.classList.contains('btn-disabled')) {
+        verifyOtp();
+      }
+    });
+  </script>
+</body>
+</html>
+
+

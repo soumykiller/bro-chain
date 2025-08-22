@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Describe Your Business</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0e0e10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 680px;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      background: #18181b;
+      border: 3px solid #fde047;
+      box-shadow: 0 4px 20px #00000099;
+    }
+
+    .video-section {
+      height: 30%;
+      background: #000;
+      position: relative;
+    }
+
+    .video-section video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .back-icon {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 20px;
+      color: #facc15;
+      z-index: 1000;
+    }
+
+    .content-section {
+      height: 70%;
+      padding: 12px 20px 80px 20px;
+      overflow-y: auto;
+      color: #f3f4f6;
+      box-sizing: border-box;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .content-section::-webkit-scrollbar {
+      display: none;
+    }
+
+    .content-section h2 {
+      color: #facc15;
+      margin: 12px 0 16px 0;
+      font-size: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #1e1e20;
+      border: 2px solid #facc15;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 14px;
+      resize: none;
+      box-sizing: border-box;
+    }
+
+    .suggestion-box {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #27272a;
+      border-radius: 10px;
+      border: 1px solid #facc15;
+      z-index: 10;
+      display: none;
+    }
+
+    .suggestion-box div {
+      padding: 10px;
+      cursor: pointer;
+      color: #facc15;
+    }
+
+    .suggestion-box div:hover {
+      background-color: #1f1f21;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #facc15;
+      color: #111;
+      font-weight: bold;
+      font-size: 15px;
+      border: none;
+      border-radius: 30px;
+      margin-top: 10px;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 50px;
+      background: #111112;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top: 2px solid #facc15;
+    }
+
+    .bottom-bar i {
+      color: #facc15;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone-container">
+  <!-- Back Icon -->
+  <a href="home.html" class="back-icon">
+    <i class="fas fa-arrow-left"></i>
+  </a>
+
+  <!-- Video Section -->
+  <div class="video-section">
+    <video autoplay muted loop>
+      <source src="3209176-uhd_3840_2160_25fps.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>Describe Your Problem</h2>
+
+    <div class="form-group">
+      <input type="text" placeholder="What is the name of your business?">
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="industryInput" placeholder="Which industry are you in?" autocomplete="off">
+      <div class="suggestion-box" id="suggestionBox">
+        <div>Technology</div>
+        <div>Finance</div>
+        <div>Healthcare</div>
+        <div>Education</div>
+        <div>Retail</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <textarea rows="3" placeholder="What problem are you solving?"></textarea>
+    </div>
+
+    <div class="form-group">
+      <textarea rows="3" placeholder="Who are your target customers?"></textarea>
+    </div>
+
+    <div class="form-group">
+      <textarea rows="4" placeholder="What is your vision or mission?"></textarea>
+    </div>
+
+    <button class="submit-btn" disabled>Submit</button>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-bar">
+    <i class="fas fa-comment-dots"></i>
+    <i class="fas fa-phone"></i>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById('industryInput');
+  const box = document.getElementById('suggestionBox');
+  input.addEventListener('input', () => {
+    const value = input.value.toLowerCase();
+    const suggestions = Array.from(box.children);
+    let match = false;
+    suggestions.forEach(option => {
+      if (option.textContent.toLowerCase().startsWith(value) && value !== '') {
+        option.style.display = 'block';
+        match = true;
+      } else {
+        option.style.display = 'none';
+      }
+    });
+    box.style.display = match ? 'block' : 'none';
+    checkInputs();
+  });
+
+  Array.from(box.children).forEach(option => {
+    option.addEventListener('click', () => {
+      input.value = option.textContent;
+      box.style.display = 'none';
+      checkInputs();
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !box.contains(e.target)) {
+      box.style.display = 'none';
+    }
+  });
+
+  const submitBtn = document.querySelector(".submit-btn");
+  const inputs = document.querySelectorAll(".content-section input, .content-section textarea");
+
+  function checkInputs() {
+    const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
+    submitBtn.disabled = !allFilled;
+    submitBtn.style.opacity = allFilled ? "1" : "0.5";
+    submitBtn.style.cursor = allFilled ? "pointer" : "not-allowed";
+  }
+
+  inputs.forEach(input => {
+    input.addEventListener("input", checkInputs);
+  });
+
+  checkInputs();
+</script>
+
+</body>
+</html>

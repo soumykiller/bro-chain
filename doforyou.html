@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DoForYou - Business Consultancy</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #000;
+      color: #FFD700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 360px;
+      height: 680px;
+      background-color: #111;
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-section {
+      height: 30%;
+      position: relative;
+    }
+
+    .top-section video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .top-section .hamburger {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 1.2rem;
+      color: #FFD700;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .top-section h1 {
+      position: absolute;
+      top: 10px;
+      left: 40px;
+      font-size: 1.1rem;
+      z-index: 2;
+      color: #FFD700;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #000;
+      transition: left 0.3s ease-in-out;
+      padding-top: 60px;
+      z-index: 10;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      color: #FFD700;
+      cursor: pointer;
+    }
+
+    .sidebar ul li i {
+      margin-right: 10px;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .bottom-section {
+      height: 70%;
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Custom Scrollbar Styles */
+    .bottom-section::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .bottom-section::-webkit-scrollbar-track {
+      background: #000; /* black track */
+    }
+
+    .bottom-section::-webkit-scrollbar-thumb {
+      background-color: #FFD700; /* yellow thumb */
+      border-radius: 4px;
+    }
+
+    .bottom-section {
+      scrollbar-color: #FFD700 #000; /* For Firefox */
+      scrollbar-width: thin;
+    }
+
+    .video-box {
+      background-color: #222;
+      padding: 8px;
+      border-radius: 10px;
+      border: 2px solid #FFD700;
+      height: 180px;
+      position: relative;
+    }
+
+    .video-box h2 {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 0.9rem;
+      color: #FFD700;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 3px 8px;
+      border-radius: 5px;
+      z-index: 2;
+    }
+
+    .video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar" id="sidebar">
+  <ul>
+    <li><a href="home.html"><i class="fas fa-home"></i> Home Page</a></li>
+    <li><a href="edit.html"><i class="fas fa-edit"></i> Edit</a></li>
+    <li><a href="decribe b.html"><i class="fas fa-pen"></i> Describe Your Business</a></li>
+    <li><a href="BR).html"><i class="fas fa-cube"></i> Blockchain</a></li>
+    <li><a href="sign.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+  </ul>
+</div>
+
+
+    <div class="overlay" id="overlay" onclick="hideSidebar()"></div>
+
+    <div class="top-section">
+      <i class="fas fa-bars hamburger" onclick="toggleSidebar()"></i>
+      <h1>DoForYou..</h1>
+      <video autoplay loop muted playsinline>
+        <source src="4428753-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Inside the .bottom-section of doforyou.html -->
+<div class="bottom-section">
+  <a href="yourbusinesshelper.html" style="text-decoration: none;">
+    <div class="video-box">
+      <h2>Your Business Helper</h2>
+      <video autoplay loop muted playsinline>
+        <source src="3191887-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </a>
+
+  <a href="digital-marketing.html" style="text-decoration: none;">
+    <div class="video-box">
+      <h2>Digital Marketing</h2>
+      <video autoplay loop muted playsinline>
+        <source src="4017225-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </a>
+
+  <a href="ai.html" style="text-decoration: none;">
+    <div class="video-box">
+      <h2>Automation & AI Integration</h2>
+      <video autoplay loop muted playsinline>
+        <source src="8084757-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </a>
+
+  <a href="management.html" style="text-decoration: none;">
+    <div class="video-box">
+      <h2>Management</h2>
+      <video autoplay loop muted playsinline>
+        <source src="8189161-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </a>
+
+  <a href="wealth.html" style="text-decoration: none;">
+    <div class="video-box">
+      <h2>Wealth-Tech</h2>
+      <video autoplay loop muted playsinline>
+        <source src="9783697-uhd_4096_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </a>
+
+  <a href="sop.html" style="text-decoration: none;">
+    <div class="video-box">
+      <h2>SOP Building</h2>
+      <video autoplay loop muted playsinline>
+        <source src="8348324-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </a>
+</div>
+
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const isActive = sidebar.classList.contains('active');
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active', !isActive);
+    }
+
+    function hideSidebar() {
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('overlay').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
+
+
+
+

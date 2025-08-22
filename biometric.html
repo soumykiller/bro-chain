@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=370, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Biometric • BroChain</title>
+  <style>
+    :root{
+      --yellow:#fde047;
+      --yellow-dark:#facc15;
+      --blue:#3B82F6;
+      --bg-dark:#18181b;
+      --bg-mid :#23232a;
+    }
+
+    /* ----- BODY ----- */
+    body{
+      margin:0;display:flex;align-items:center;justify-content:center;
+      min-height:100vh;
+      background:linear-gradient(135deg,#18181b 0%,#27272a 60%,#111112 100%);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    }
+
+    /* ----- PHONE CONTAINER ----- */
+    .phone{
+      position:relative;width:370px;max-width:98vw;height:680px;
+      background:var(--bg-dark);border:4px solid #27272a;border-radius:32px;overflow:hidden;
+      box-shadow:0 8px 32px rgb(0 0 0/.28);display:flex;flex-direction:column;
+    }
+
+    /* ----- 30 % TOP (VIDEO) ----- */
+    .video-wrap{position:relative;height:30%;}
+    .video-wrap video{width:100%;height:100%;object-fit:cover;}
+    .top-overlay{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;pointer-events:none;}
+    .title{margin-top:8px;font-size:1.2rem;font-weight:700;color:var(--yellow);text-shadow:0 2px 8px #000a;}
+    .back-btn{
+      position:absolute;left:16px;top:10px;width:40px;height:40px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,.4);backdrop-filter:blur(4px);
+      border:2px solid var(--yellow);text-decoration:none;z-index:2;
+    }
+    .back-btn svg{width:20px;height:20px;stroke:var(--yellow);}
+
+    /* ----- 70 % CONTENT ----- */
+    .content{flex:1;padding:16px 18px;display:flex;flex-direction:column;align-items:center;gap:18px;}
+
+    /* fingerprint VIDEO square */
+    .finger-square{
+      position:relative;width:220px;height:220px;max-width:80%;
+      background:var(--bg-mid);border:3px solid var(--yellow);border-radius:20px;
+      box-shadow:0 2px 12px #0007;overflow:hidden;
+    }
+    .finger-square video{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      opacity:.7; /* 70 % visibility */
+    }
+    .finger-square svg{
+      position:relative; /* on top of the video */
+      width:90px;height:90px;stroke:var(--blue);opacity:.95;
+      display:block;margin:65px auto 0 auto;
+    }
+
+    /* action grid */
+    .action-grid{
+      width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:auto;
+    }
+    .action-box{
+      background:var(--bg-mid);border:2px solid var(--yellow);border-radius:16px;
+      padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;
+      text-decoration:none;color:var(--yellow);font-size:.8rem;font-weight:600;
+      box-shadow:0 2px 8px #0007;transition:background .2s;
+    }
+    .action-box:hover{background:#2e2e34;}
+    .action-box svg{width:22px;height:22px;stroke:var(--yellow);}
+  </style>
+</head>
+<body>
+
+  <div class="phone">
+
+    <!-- 30 % HEADER -->
+    <div class="video-wrap">
+      <video src="istockphoto-2197532745-640_adpp_is.mp4" autoplay muted loop></video>
+      <div class="top-overlay"><span class="title">Biometric</span></div>
+      <a href="home.html" class="back-btn" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <!-- 70 % CONTENT -->
+    <div class="content">
+
+      <!-- square with video & blue fingerprint icon -->
+      <div class="finger-square">
+        <!-- your looping clip only inside the square -->
+        <video src="istockphoto-2216594000-640_adpp_is.mp4" autoplay muted loop></video>
+
+        <!-- fingerprint icon (blue) -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 11v2m0 4v.01M8.5 17a6.5 6.5 0 1 1 7 0"
+                stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 7a4 4 0 0 1 4 4v1"
+                stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 3a8 8 0 0 1 8 8v2"
+                stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- action boxes -->
+      <div class="action-grid">
+        <a href="change-fingerprint.html" class="action-box">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 11v2m0 4v.01M8.5 17a6.5 6.5 0 1 1 7 0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 7a4 4 0 0 1 4 4v1" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Change&nbsp;FP
+        </a>
+
+        <a href="pattern.html" class="action-box">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="5" cy="5" r="2" stroke-width="2"/>
+            <circle cx="19" cy="5" r="2" stroke-width="2"/>
+            <circle cx="5" cy="19" r="2" stroke-width="2"/>
+            <circle cx="19" cy="19" r="2" stroke-width="2"/>
+            <path d="M5 5h14v14H5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Pattern
+        </a>
+
+        <a href="mobile-number.html" class="action-box">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 4h6l2 5-2 2a16 16 0 0 0 7 7l2-2 5 2v6a2 2 0 0 1-2 2A18 18 0 0 1 2 6a2 2 0 0 1 2-2z"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Mobile&nbsp;No.
+        </a>
+
+        <a href="profile-settings.html" class="action-box">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 8.6 15a1.65 1.65 0 0 0-1.82-.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0 .33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 15 8.6a1.65 1.65 0 0 0 1.82.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 15z"
+                  stroke-width="2"/>
+          </svg>
+          Settings
+        </a>
+      </div><!-- /.action-grid -->
+    </div><!-- /.content -->
+  </div><!-- /.phone -->
+
+</body>
+</html>
+

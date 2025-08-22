@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #FF4655;
+      --primary-dark: #D93A3A;
+      --secondary: #3B82F6;
+      --secondary-dark: #2563EB;
+      --accent: #10B981;
+      --accent-dark: #059669;
+      --danger: #EF4444;
+      --danger-dark: #DC2626;
+      --bg: #0E0E10;
+      --card-bg: #1E1E22;
+      --text: #FFFFFF;
+      --text-light: #A0A0A0;
+      --border: #2E2E32;
+      --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.3), 0 10px 10px -5px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 680px;
+      background: var(--bg);
+      border-radius: 20px;
+      overflow-y: auto;
+      position: relative;
+      border: 2px solid var(--primary);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .hamburger {
+      font-size: 22px;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: -180px;
+      width: 180px;
+      height: 100%;
+      background: #1f1f23;
+      padding-top: 60px;
+      transition: var(--transition);
+      z-index: 20;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px 20px;
+      color: yellow;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .game-container {
+      padding: 10px 15px;
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .active-screen {
+      display: flex;
+    }
+
+    .title {
+      font-size: 20px;
+      color: var(--primary);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    .input-group, .btn-group {
+      margin-top: 10px;
+    }
+
+    .input-label {
+      color: var(--text);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(30, 30, 34, 0.8);
+      color: var(--text);
+    }
+
+    .participant-list {
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px;
+      background: rgba(30, 30, 34, 0.6);
+    }
+
+    .participant-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      background: rgba(40, 40, 45, 0.8);
+      border-radius: 6px;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .remove-btn {
+      background: var(--danger);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      font-size: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .btn-primary { background: var(--primary); }
+    .btn-secondary { background: var(--secondary); }
+    .btn-accent { background: var(--accent); }
+    .btn-danger { background: var(--danger); }
+
+    .imposter-box {
+      background: linear-gradient(135deg, #FF5F6D, #FF8E53);
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .distribution-container {
+      display: flex;
+      gap: 10px;
+      flex-direction: row;
+    }
+
+    .names-column, .amounts-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .name-item, .amount-item {
+      padding: 8px;
+      background: #2a2a2e;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 14px;
+      color: white;
+    }
+
+    .final-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .final-item {
+      display: flex;
+      justify-content: space-between;
+      background: #2c2c31;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+  </style>
+
+</head>
+<body>
+      <div class="phone-container">
+    <!-- Top Bar with Hamburger -->
+    <div class="top-bar">
+      <i class="fas fa-bars hamburger" id="menuToggle"></i>
+      <div style="color: yellow; font-weight: bold;">Expense Imposter</div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebarMenu">
+      <a href="home.html"><i class="fas fa-home"></i> Home</a>
+      <a href="Bro-social.html"><i class="fas fa-globe"></i> Bro-Social</a>
+    </div>
+    <div class="game-container">
+        <!-- Player Input Screen -->
+        <div class="screen active-screen" id="playerScreen">
+            <h1 class="title">EXPENSE IMPOSTER</h1>
+            <p class="subtitle">Add 2-10 players. One will secretly distribute expenses!</p>
+            
+            <div class="input-group">
+                <label for="playerInput" class="input-label">Player Name</label>
+                <input type="text" id="playerInput" class="input-field" placeholder="Enter name">
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" id="addPlayerBtn">Add</button>
+                <button class="btn btn-secondary" id="doneBtn" disabled>Done</button>
+            </div>
+            
+            <div class="participant-list" id="participantList"></div>
+        </div>
+
+        <!-- Expense Input Screen -->
+        <div class="screen" id="expenseScreen">
+            <h1 class="title">SET TOTAL EXPENSE</h1>
+            <p class="subtitle">The Imposter will distribute this amount</p>
+            
+            <div class="input-group">
+                <label for="expenseInput" class="input-label">Total Amount (₹)</label>
+                <input type="number" id="expenseInput" class="input-field" placeholder="Enter amount" step="0.01">
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-accent" id="confirmExpenseBtn">Confirm</button>
+                <button class="btn btn-danger" id="backToPlayersBtn">Back</button>
+            </div>
+        </div>
+
+        <!-- Imposter Selection Screen -->
+        <div class="screen" id="imposterScreen">
+            <h1 class="title">WHO IS THE IMPOSTER?</h1>
+            <p class="subtitle">Tap the box to reveal!</p>
+            
+            <div class="imposter-box" id="imposterBox">
+                <div class="imposter-note">???</div>
+                <p>Tap to reveal</p>
+            </div>
+        </div>
+
+        <!-- Expense Distribution Screen -->
+        <div class="screen" id="distributionScreen">
+            <h1 class="title">DISTRIBUTE EXPENSES</h1>
+            <p class="subtitle">Drag amounts to players</p>
+            
+            <div class="distribution-container">
+                <div class="names-column" id="namesColumn"></div>
+                <div class="amounts-column" id="amountsColumn"></div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-label">Total: <span id="totalDisplay">₹0</span> / <span id="totalExpenseDisplay">₹0</span></div>
+            </div>
+            
+            <button class="btn btn-accent" id="confirmDistributionBtn" disabled>Confirm</button>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div class="screen" id="finalScreen">
+            <h1 class="title">EXPENSE DISTRIBUTION</h1>
+            <p class="subtitle">The Imposter has decided!</p>
+            
+            <div class="final-list" id="finalList"></div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
+                <button class="btn btn-danger" id="exitBtn">Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const screens = {
+                player: document.getElementById('playerScreen'),
+                expense: document.getElementById('expenseScreen'),
+                imposter: document.getElementById('imposterScreen'),
+                distribution: document.getElementById('distributionScreen'),
+                final: document.getElementById('finalScreen')
+            };
+
+            const playerInput = document.getElementById('playerInput');
+            const addPlayerBtn = document.getElementById('addPlayerBtn');
+            const doneBtn = document.getElementById('doneBtn');
+            const participantList = document.getElementById('participantList');
+            const expenseInput = document.getElementById('expenseInput');
+            const confirmExpenseBtn = document.getElementById('confirmExpenseBtn');
+            const backToPlayersBtn = document.getElementById('backToPlayersBtn');
+            const imposterBox = document.getElementById('imposterBox');
+            const namesColumn = document.getElementById('namesColumn');
+            const amountsColumn = document.getElementById('amountsColumn');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const totalExpenseDisplay = document.getElementById('totalExpenseDisplay');
+            const confirmDistributionBtn = document.getElementById('confirmDistributionBtn');
+            const finalList = document.getElementById('finalList');
+            const playAgainBtn = document.getElementById('playAgainBtn');
+            const exitBtn = document.getElementById('exitBtn');
+
+            // Game State
+            let players = [];
+            let totalExpense = 0;
+            let imposter = '';
+            let distributedAmounts = [];
+            let finalDistribution = {};
+            let draggedAmount = null;
+
+            // Event Listeners
+            addPlayerBtn.addEventListener('click', addPlayer);
+            doneBtn.addEventListener('click', () => switchScreen('expense'));
+            confirmExpenseBtn.addEventListener('click', confirmExpense);
+            backToPlayersBtn.addEventListener('click', () => switchScreen('player'));
+            imposterBox.addEventListener('click', revealImposter);
+            confirmDistributionBtn.addEventListener('click', showFinalResults);
+            playAgainBtn.addEventListener('click', resetGame);
+            exitBtn.addEventListener('click', resetGame);
+
+            // Player Input Handling
+            function addPlayer() {
+                const name = playerInput.value.trim();
+                if (!name) return alert("Please enter a name!");
+                if (players.length >= 10) return alert("Max 10 players allowed!");
+                if (players.includes(name)) return alert("Name already added!");
+
+                players.push(name);
+                playerInput.value = '';
+                renderPlayerList();
+                doneBtn.disabled = players.length < 2;
+            }
+             const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebarMenu');
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+            function renderPlayerList() {
+                participantList.innerHTML = '';
+                players.forEach((player, index) => {
+                    const playerItem = document.createElement('div');
+                    playerItem.className = 'participant-item';
+                    playerItem.innerHTML = `
+                        <span>${player}</span>
+                        <button class="remove-btn" data-index="${index}">Remove</button>
+                    `;
+                    participantList.appendChild(playerItem);
+                });
+
+                // Add remove event listeners
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        players.splice(index, 1);
+                        renderPlayerList();
+                        doneBtn.disabled = players.length < 2;
+                    });
+                });
+            }
+
+            // Expense Handling
+            function confirmExpense() {
+                const amount = parseFloat(expenseInput.value);
+                if (isNaN(amount)) return alert("Please enter a valid amount!");
+                if (amount <= 0) return alert("Amount must be positive!");
+
+                totalExpense = amount;
+                switchScreen('imposter');
+            }
+
+            // Imposter Selection
+            function revealImposter() {
+                imposter = players[Math.floor(Math.random() * players.length)];
+                imposterBox.innerHTML = `
+                    <div class="imposter-note">YOU ARE THE IMPOSTER!</div>
+                    <p>Distribute expenses secretly.</p>
+                `;
+                imposterBox.style.cursor = 'default';
+                setTimeout(() => switchScreen('distribution'), 2000);
+            }
+
+            // Expense Distribution
+            function generateRandomDistribution() {
+                const amounts = [];
+                let remaining = totalExpense;
+
+                // Generate random splits (with decimals)
+                for (let i = 0; i < players.length - 1; i++) {
+                    const max = remaining - 0.1 * (players.length - i - 1);
+                    const amount = parseFloat((Math.random() * max + 0.1).toFixed(2));
+                    amounts.push(amount);
+                    remaining = parseFloat((remaining - amount).toFixed(2));
+                }
+                amounts.push(parseFloat(remaining.toFixed(2)));
+
+                // Shuffle amounts
+                for (let i = amounts.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [amounts[i], amounts[j]] = [amounts[j], amounts[i]];
+                }
+
+                return amounts;
+            }
+
+            function setupDistribution() {
+                distributedAmounts = generateRandomDistribution();
+                namesColumn.innerHTML = '';
+                amountsColumn.innerHTML = '';
+                totalExpenseDisplay.textContent = `₹${totalExpense.toFixed(2)}`;
+                updateTotalDisplay();
+
+                players.forEach(player => {
+                    const nameItem = document.createElement('div');
+                    nameItem.className = 'name-item';
+                    nameItem.textContent = player;
+                    nameItem.dataset.player = player;
+                    nameItem.addEventListener('dragover', dragOver);
+                    nameItem.addEventListener('drop', drop);
+                    namesColumn.appendChild(nameItem);
+                });
+
+                distributedAmounts.forEach(amount => {
+                    const amountItem = document.createElement('div');
+                    amountItem.className = 'amount-item';
+                    amountItem.textContent = `₹${amount.toFixed(2)}`;
+                    amountItem.dataset.amount = amount;
+                    amountItem.draggable = true;
+                    amountItem.addEventListener('dragstart', dragStart);
+                    amountsColumn.appendChild(amountItem);
+                });
+            }
+
+            function dragStart(e) {
+                draggedAmount = e.target.dataset.amount;
+                e.target.classList.add('dragging');
+            }
+
+            function dragOver(e) {
+                e.preventDefault();
+            }
+
+            function drop(e) {
+                e.preventDefault();
+                const nameItem = e.target.closest('.name-item');
+                if (!nameItem || nameItem.dataset.amount || !draggedAmount) return;
+
+                // Assign amount to player
+                nameItem.dataset.amount = draggedAmount;
+                nameItem.textContent = `${nameItem.dataset.player} - ₹${parseFloat(draggedAmount).toFixed(2)}`;
+                nameItem.classList.add('assigned');
+
+                // Remove the dragged amount from the amounts column
+                const amountItems = document.querySelectorAll('.amount-item');
+                for (const item of amountItems) {
+                    if (item.dataset.amount === draggedAmount) {
+                        item.remove();
+                        break;
+                    }
+                }
+
+                updateTotalDisplay();
+                draggedAmount = null;
+            }
+
+            function updateTotalDisplay() {
+                const assignedAmounts = Array.from(document.querySelectorAll('.name-item[data-amount]'))
+                    .map(item => parseFloat(item.dataset.amount));
+                const totalAssigned = parseFloat(assignedAmounts.reduce((sum, amt) => sum + amt, 0).toFixed(2));
+                totalDisplay.textContent = `₹${totalAssigned}`;
+
+                // Enable confirm button only if all amounts are assigned and total matches
+                const isComplete = assignedAmounts.length === players.length && Math.abs(totalAssigned - totalExpense) < 0.01;
+                confirmDistributionBtn.disabled = !isComplete;
+            }
+
+            function showFinalResults() {
+                finalDistribution = {};
+                const nameItems = document.querySelectorAll('.name-item');
+
+                nameItems.forEach(item => {
+                    if (item.dataset.amount) {
+                        finalDistribution[item.dataset.player] = parseFloat(item.dataset.amount);
+                    }
+                });
+
+                renderFinalResults();
+                switchScreen('final');
+            }
+
+            function renderFinalResults() {
+                finalList.innerHTML = '';
+                for (const [player, amount] of Object.entries(finalDistribution)) {
+                    const item = document.createElement('div');
+                    item.className = 'final-item';
+                    item.innerHTML = `
+                        <span class="final-name">${player}</span>
+                        <span class="final-amount">₹${amount.toFixed(2)}</span>
+                    `;
+                    finalList.appendChild(item);
+                }
+            }
+
+            // Utility Functions
+            function switchScreen(screenName) {
+                Object.values(screens).forEach(screen => screen.classList.remove('active-screen'));
+                screens[screenName].classList.add('active-screen');
+
+                if (screenName === 'distribution') setupDistribution();
+            }
+
+            function resetGame() {
+                players = [];
+                totalExpense = 0;
+                imposter = '';
+                distributedAmounts = [];
+                finalDistribution = {};
+                playerInput.value = '';
+                expenseInput.value = '';
+                participantList.innerHTML = '';
+                doneBtn.disabled = true;
+                imposterBox.innerHTML = `
+                    <div class="imposter-note">???</div>
+                    <p>Tap to reveal</p>
+                `;
+                imposterBox.style.cursor = 'pointer';
+                switchScreen('player');
+            }
+        });
+    </script>
+</body>
+</html>

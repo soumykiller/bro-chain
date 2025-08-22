@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - Bro-Chain</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 700px;
+      border-radius: 40px;
+      overflow: hidden;
+      background: black;
+      position: relative;
+    }
+
+    video#bgVideo {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .top-right-logo {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      width: 40px;
+      z-index: 2;
+    }
+
+    .sign-up-screen {
+      z-index: 1;
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .signup-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 2px solid #facc15;
+      border-radius: 1rem;
+      padding: 2rem 1rem;
+      text-align: center;
+      width: 85%;
+    }
+
+    .signup-title {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .signup-box input {
+      width: 80%;
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .btn-main {
+      background-color: #facc15;
+      color: black;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .btn-main:hover {
+      background-color: #e0b800;
+    }
+
+    .btn-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .signup-box p {
+      color: white;
+      margin-top: 1rem;
+    }
+
+    .signup-box a.link {
+      color: #facc15;
+      text-decoration: none;
+    }
+
+    .signup-box a.link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone-container">
+    <video id="bgVideo" src="sign.html.mp4" autoplay muted loop playsinline></video>
+    <img src="Logo-removebg-preview.png" alt="Logo" class="top-right-logo" />
+    <div class="sign-up-screen">
+      <div class="signup-box">
+        <h2 class="signup-title">Sign Up</h2>
+        <input type="email" id="signupEmail" placeholder="Gmail" oninput="checkInputs()" />
+        <input type="password" id="signupPassword" placeholder="Password" oninput="checkInputs()" />
+        <a id="signUpBtn" class="btn-main btn-disabled" onclick="handleSignUp()">Sign Up</a>
+        <p>Already a bro? <a href="signin.html" class="link">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function checkInputs() {
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const btn = document.getElementById('signUpBtn');
+
+      if (email && password) {
+        btn.classList.remove('btn-disabled');
+      } else {
+        btn.classList.add('btn-disabled');
+      }
+    }
+
+    function generateOTP() {
+      return Math.floor(1000 + Math.random() * 9000); // Generates 4-digit OTP
+    }
+
+    function handleSignUp() {
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const btn = document.getElementById('signUpBtn');
+
+      if (!email || !password || btn.classList.contains('btn-disabled')) return;
+
+      const otp = generateOTP();
+      sessionStorage.setItem('brochain_email', email);
+      sessionStorage.setItem('brochain_otp', otp);
+      alert(`Your OTP is: ${otp}`);
+      window.location.href = 'otp.html'; // Simulate anchor behavior
+    }
+  </script>
+
+</body>
+</html>
+
+
+

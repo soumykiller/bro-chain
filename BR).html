@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      font-family: 'Inter', sans-serif;
+      color: #facc15;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 680px;
+      background-color: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 10px #000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-30 {
+      height: 30%;
+      position: relative;
+    }
+
+    .top-30 video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .top-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 12px;
+    }
+
+    .top-overlay .center-text {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .top-overlay a,
+    .top-overlay .icon-btn {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 6px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Extra space on the very right‑hand icon */
+    .right-icon-btn {
+      margin-right: 20px;   /* adjust this value to taste */
+    }
+
+    .bottom-70 {
+      height: 70%;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .box {
+      background-color: #222;
+      border: 1px solid #facc15;
+      border-radius: 12px;
+      padding: 16px;
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 5px #000;
+    }
+
+    .bar {
+      background-color: #1a1a1a;
+      border-left: 4px solid #facc15;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke: #facc15;
+    }
+
+    .icon-lg {
+      width: 28px;
+      height: 28px;
+      stroke: #facc15;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-container">
+    <!-- Top 30% with video and overlay -->
+    <div class="top-30">
+      <video autoplay muted loop playsinline>
+        <source src="8369965-hd_1920_1080_30fps.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="top-overlay">
+        <a href="home.html" class="icon-btn"><i data-lucide="arrow-left" class="icon"></i></a>
+        <div class="center-text">Bro-Coins</div>
+        <div class="icon-btn right-icon-btn"><i data-lucide="badge-dollar-sign" class="icon"></i></div>
+      </div>
+    </div>
+
+    <!-- Bottom 70% -->
+    <div class="bottom-70">
+      <!-- Grid Boxes -->
+      <div class="grid-2x2">
+        <div class="box">
+          <i data-lucide="wallet" class="icon"></i>
+          Wallet
+        </div>
+        <div class="box">
+          <i data-lucide="line-chart" class="icon"></i>
+          Cryptocurrency
+        </div>
+        <div class="box">
+          <i data-lucide="star" class="icon"></i>
+          Points<br><span id="pointsNum"></span>
+        </div>
+        <div class="box">
+          <i data-lucide="user" class="icon-lg"></i>
+          Profile
+        </div>
+      </div>
+
+      <!-- Info Bars -->
+      <div class="bar"><i data-lucide="bar-chart-3" class="icon"></i> Analysis: Analyzing your Brew Coins</div>
+      <div class="bar"><i data-lucide="globe" class="icon"></i> Explore Blockchain</div>
+      <div class="bar"><i data-lucide="settings" class="icon"></i> Settings</div>
+      <div class="bar"><i data-lucide="log-out" class="icon"></i> Logout</div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('pointsNum').textContent = Math.floor(Math.random() * 9000 + 1000);
+  </script>
+</body>
+</html>
+
+

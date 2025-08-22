@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Group</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: black;
+      color: yellow;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 680px;
+      margin: auto;
+      border: 2px solid yellow;
+      border-radius: 20px;
+      overflow-y: auto;
+      background: black;
+      position: relative;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+    }
+
+    .top-bar a {
+      color: yellow;
+      font-size: 20px;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 20px;
+      margin-top: -25px;
+    }
+
+    .title i {
+      margin-right: 5px;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      background-color: yellow;
+      border-radius: 50%;
+      margin: 10px auto 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-size: 40px;
+    }
+
+    .username {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .group-box {
+      background-color: #222;
+      border: 1px solid yellow;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: yellow;
+    }
+
+    .group-box .icons i {
+      margin-left: 10px;
+      color: yellow;
+      cursor: pointer;
+    }
+
+    .add-bar {
+      background-color: #333;
+      color: yellow;
+      padding: 10px;
+      text-align: center;
+      border-top: 1px solid yellow;
+      border-bottom: 1px solid yellow;
+      margin: 20px 15px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin: 15px;
+    }
+
+    .action-buttons .btn {
+      background-color: #111;
+      border: 1px solid yellow;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: yellow;
+      font-weight: bold;
+      width: 140px;
+      text-align: center;
+    }
+
+    /* Hide scroll bar but allow scroll */
+    .phone-container::-webkit-scrollbar {
+      width: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-container">
+    <div class="top-bar">
+      <a href="Bro-social.html"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <div class="title"><i class="fas fa-users"></i> Group</div>
+
+    <div class="profile-pic">
+      <i class="fas fa-user"></i>
+    </div>
+
+    <div class="username">Ayush Manikpuri</div>
+
+    <div class="group-box">
+      <div># Wanderers</div>
+      <div class="icons">
+        <i class="fas fa-cog"></i>
+        <i class="fas fa-user-plus"></i>
+      </div>
+    </div>
+
+    <div class="group-box">
+      <div># CryptoCrew</div>
+      <div class="icons">
+        <i class="fas fa-cog"></i>
+        <i class="fas fa-user-plus"></i>
+      </div>
+    </div>
+
+    <div class="group-box">
+      <div># NightOwls</div>
+      <div class="icons">
+        <i class="fas fa-cog"></i>
+        <i class="fas fa-user-plus"></i>
+      </div>
+    </div>
+
+    <div class="group-box">
+      <div># HustleGang</div>
+      <div class="icons">
+        <i class="fas fa-cog"></i>
+        <i class="fas fa-user-plus"></i>
+      </div>
+    </div>
+
+    <div class="group-box">
+      <div># VisionX</div>
+      <div class="icons">
+        <i class="fas fa-cog"></i>
+        <i class="fas fa-user-plus"></i>
+      </div>
+    </div>
+
+    <div class="add-bar">+ Add or Create New Group</div>
+
+    <div class="action-buttons">
+      <div class="btn">Create Group</div>
+      <div class="btn">Add New Friend</div>
+    </div>
+  </div>
+</body>
+</html>

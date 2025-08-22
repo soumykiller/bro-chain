@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Expenses</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: #fde047;
+    }
+
+    .phone-container {
+      width: 360px;
+      height: 680px;
+      margin: 0 auto;
+      background: linear-gradient(-45deg, #111112, #000000, #1e1e1e, #111112);
+      background-size: 400% 400%;
+      animation: gradientMove 8s ease infinite;
+      border: 2px solid #fde047;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .top-bar {
+      height: 50px;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 2px solid #fde047;
+    }
+
+    .top-bar h2 {
+      color: #fde047;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .back-icon {
+      position: absolute;
+      left: 12px;
+      font-size: 24px;
+      color: #fde047;
+      text-decoration: none;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .chart-container {
+      height: 30%;
+      background-color: #1e1e1e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    canvas {
+      width: 90% !important;
+      height: 100% !important;
+    }
+
+    .middle-section {
+      flex: 1;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-sizing: border-box;
+    }
+
+    .transactions-heading {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 6px;
+      color: #fde047;
+    }
+
+    .transactions .entry {
+      background: #000;
+      border: 2px solid #fde047;
+      padding: 10px 14px;
+      margin: 4px auto;
+      border-radius: 10px;
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .transactions .entry:hover {
+      background-color: #1e1e1e;
+    }
+
+    .entry-label {
+      font-size: 14px;
+    }
+
+    .entry-amount {
+      font-weight: bold;
+      color: #fde047;
+    }
+
+    .bottom-boxes {
+      margin-top: auto;
+      padding: 8px 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .box {
+      width: 30%;
+      background-color: #000;
+      border: 2px solid #fde047;
+      border-radius: 12px;
+      padding: 10px 4px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fde047;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .box:hover {
+      transform: scale(1.05);
+      background-color: #1e1e1e;
+    }
+
+    .box span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-container">
+
+    <!-- Top Header Bar -->
+    <div class="top-bar">
+      <a href="home.html" class="back-icon">&#8592;</a>
+      <h2>Expenses</h2>
+    </div>
+
+    <!-- Chart Area -->
+    <div class="chart-container">
+      <canvas id="expenseChart"></canvas>
+    </div>
+
+    <!-- Middle Content -->
+    <div class="middle-section">
+
+      <!-- Transaction Heading -->
+      <div class="transactions-heading">💸 Last Transactions</div>
+
+      <!-- Last Transactions -->
+      <div class="transactions">
+        <div class="entry" onclick="alert('You clicked on Food')">
+          <div class="entry-label">🍔 Food</div>
+          <div class="entry-amount">₹500</div>
+        </div>
+        <div class="entry" onclick="alert('You clicked on Travel')">
+          <div class="entry-label">✈️ Travel</div>
+          <div class="entry-amount">₹2000</div>
+        </div>
+        <div class="entry" onclick="alert('You clicked on Shopping')">
+          <div class="entry-label">🛍️ Shopping</div>
+          <div class="entry-amount">₹10,000</div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation Boxes -->
+      <div class="bottom-boxes">
+        <a class="box" href="#"><span>🕰️</span>History</a>
+        <a class="box" href="#"><span>📊</span>Analytics</a>
+        <a class="box" href="#"><span>🧠</span>Loopholes</a>
+        <a class="box" href="#"><span>📋</span>Reports</a>
+        <a class="box" href="#"><span>📈</span>Forecasts</a>
+        <a class="box" href="profile.html"><span>👤</span>Profile</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Bar Chart Script -->
+  <script>
+    const ctx = document.getElementById('expenseChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Food', 'Travel', 'Bills', 'Shopping'],
+        datasets: [{
+          label: 'Expenses',
+          data: [1000, 800, 600, 950],
+          backgroundColor: ['#fde047', '#f59e0b', '#22d3ee', '#a78bfa'],
+          borderColor: '#000',
+          borderWidth: 1,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#fde047' },
+            grid: { display: false }
+          },
+          y: {
+            ticks: { color: '#fde047' },
+            grid: { color: '#333' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
