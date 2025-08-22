@@ -1,4 +1,4 @@
-# MSME Fintech Platform
+# Fintech Platform
 
 A simple web-based fintech platform designed for **Micro, Small, and Medium Enterprises (MSMEs)** to manage financial activities, business performance, and digital payments.  
 This project is built using **HTML, CSS, and JavaScript**.
